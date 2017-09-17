@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 
 class ViewController: UIViewController {
-    
+    //MARK: - Properties
     @IBOutlet weak var awesomeImage1: UIImageView!
     @IBOutlet weak var messageLabel: UILabel!
     
@@ -18,8 +18,8 @@ class ViewController: UIViewController {
     
     var awesomePlayer = AVAudioPlayer()
     var index = -1
-    var imageNumber = 1
-    var soundNumber = 1
+    var imageNumber = -1
+    var soundNumber = -1
     let numberOfImages = 5
     let numberOfSounds = 5
     
@@ -28,7 +28,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    //MARK: - My Own Functions
     func playSound(soundName: String, audioPlayer: inout AVAudioPlayer) {
         // Can we load in the file soundName?
         
@@ -58,6 +58,15 @@ class ViewController: UIViewController {
         } while lastNumber == newIndex
         return newIndex
     }
+    
+    //MARK: - Actions
+    @IBAction func soundSwitchPressed(_ sender: UISwitch) {
+        if !soundSwitch.isOn && soundNumber != -1 {
+            // stop playing
+            awesomePlayer.stop()
+        }
+    }
+    
     @IBAction func messageButtonPressed(_ sender: UIButton) {
         
         
@@ -82,7 +91,7 @@ class ViewController: UIViewController {
         awesomeImage1.image = UIImage(named: "image\(imageNumber)")
         
         
-        if soundSwitch.isOn == true {
+        if soundSwitch.isOn {
         
         // Get a random number to play our sound
         soundNumber = nonRepeatingRandom(lastNumber: soundNumber, maxValue: numberOfSounds)
